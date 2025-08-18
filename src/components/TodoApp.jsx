@@ -1,4 +1,7 @@
+import { CheckCircle2, Circle, Filter, Plus, Trash2 } from 'lucide-react';
 import React from 'react';
+import TodoFilter from './TodoFilter';
+import TodoForm from './TodoForm';
 
 const TodoApp = () => {
   return (
@@ -45,6 +48,56 @@ const TodoApp = () => {
             </div>
           </div>
         </div>
+        {/* Main Todo container */}
+        <div className="bg-white/90 backdrop-blur-sm rounded-b-2xl border border-gray-300 shadow-lg overflow-hidden">
+          {/* Action Bar */}
+          <div className="p-6 border-b border-gray-300">
+            <div className="flex items-center justify-between mb-4">
+              <button className="flex items-center gap-3 bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-lg transition-colors duration-200 font-medium cursor-pointer">
+                <Plus size={20} />
+                Add Todo
+              </button>
+              {/* clear and delete buttons */}
+              <div className="flex items-center gap-2">
+                <button className="flex items-center gap-3 text-red-600 hover:text-red-700 px-3 py-2 rounded-lg hover:bg-red-50 transition-colors duration-200 text-sm">
+                  <Trash2 size={16} />
+                  Clear Completed
+                </button>
+                <button className="flex items-center gap-3 text-green-600 hover:text-green-700 px-3 py-2 rounded-lg hover:bg-green-50 transition-colors duration-200 text-sm">
+                  <CheckCircle2 size={16} />
+                  Mark All Completed
+                </button>
+              </div>
+            </div>
+            {/* Todo Filter */}
+            <TodoFilter />
+          </div>
+          {/* Todo Form */}
+          <div className="p-6 border-b border-gray-300 bg-gray-100">
+            <TodoForm />
+          </div>
+          {/* Todo List */}
+          <div className="max-h-96 overflow-y-auto">
+            <div className="p-12 text-center">
+              <div className="text-gray-600">
+                <Circle size={48} className="mx-auto mb-4 opacity-50" />
+                <p className="text-lg font-medium mb-2 text-gray-800">
+                  No Todos Yet
+                </p>
+                <p>Add your first todo to get started!</p>
+              </div>
+              {/* Conditinal Rendering */}
+              <div className="text-gray-600">
+                <Filter size={48} className="mx-auto mb-4 opacity-50" />
+                <p className="text-lg font-medium mb-2 text-gray-800">
+                  No Filter Todos
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* Footer Info */}
+        <div className="text-center mt-6 text-sm text-gray-700">Footer</div>
       </div>
     </div>
   );

@@ -5,7 +5,6 @@ const App = () => {
   return (
     <>
       <div>
-        //today break
         <TodoApp />
       </div>
     </>

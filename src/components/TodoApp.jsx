@@ -2,6 +2,7 @@ import { CheckCircle2, Circle, Filter, Plus, Trash2 } from 'lucide-react';
 import React from 'react';
 import TodoFilter from './TodoFilter';
 import TodoForm from './TodoForm';
+import TodoItem from './TodoItem';
 
 const TodoApp = () => {
   return (
@@ -91,6 +92,8 @@ const TodoApp = () => {
                 <Filter size={48} className="mx-auto mb-4 opacity-50" />
                 <p className="text-lg font-medium mb-2 text-gray-800">
                   No Filter Todos
+                  {/* I will manage it on later */}
+                  {/* <TodoItem /> */}
                 </p>
               </div>
             </div>

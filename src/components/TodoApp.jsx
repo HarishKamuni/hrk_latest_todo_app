@@ -3,8 +3,20 @@ import React from 'react';
 import TodoFilter from './TodoFilter';
 import TodoForm from './TodoForm';
 import TodoItem from './TodoItem';
+import { useSelector } from 'react-redux';
+import {
+  selectFilter,
+  selectFilterTodos,
+  selectTodoStats,
+  selectTodos,
+} from '../store/selectors';
 
 const TodoApp = () => {
+  const todos = useSelector(selectTodos);
+  const filteredTodos = useSelector(selectFilterTodos);
+  const filter = useSelector(selectFilter);
+  const stats = useSelector(selectTodoStats);
+  console.log(stats.completed);
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-100 via-gray-200 to-gray-300 py-8 px-4">
       <div className="max-w-2xl mx-auto">
@@ -21,29 +33,36 @@ const TodoApp = () => {
             </h2>
             <div className="text-2xl font-bold text-green-600">
               {/* stats completed logics */}
+              {stats.completionPercentage}%
             </div>
           </div>
           <div className="w-full bg-gray-300 rounded-full h-3 mb-4">
             {/* Progressbar */}
-            <div className="bg-gradient-to-r from-green-500 to-green-600 h-3 rounded-full transition-all duration-500 ease-out"></div>
+            <div
+              className="bg-gradient-to-r from-green-500 to-green-600 h-3 rounded-full transition-all duration-500 ease-out"
+              style={{ width: `${stats.completionPercentage}%` }}
+            ></div>
           </div>
           {/* stats */}
           <div className="grid grid-cols-3 gap-4 text-center">
             <div>
               <div className="text-2xl font-bold text-gray-800">
                 {/* stats total logic */}
+                {stats.total}
               </div>
               <div className="text-sm text-gray-600">Total</div>
             </div>
             <div>
               <div className="text-2xl font-bold text-gray-800">
                 {/* stats Active logic */}
+                {stats.active}
               </div>
               <div className="text-sm text-gray-600">Active</div>
             </div>
             <div>
               <div className="text-2xl font-bold text-gray-800">
                 {/* stats completed logic */}
+                {stats.completed}
               </div>
               <div className="text-sm text-gray-600">Completed</div>
             </div>
@@ -59,19 +78,25 @@ const TodoApp = () => {
                 Add Todo
               </button>
               {/* clear and delete buttons */}
-              <div className="flex items-center gap-2">
-                <button className="flex items-center gap-3 text-red-600 hover:text-red-700 px-3 py-2 rounded-lg hover:bg-red-50 transition-colors duration-200 text-sm">
-                  <Trash2 size={16} />
-                  Clear Completed
-                </button>
-                <button className="flex items-center gap-3 text-green-600 hover:text-green-700 px-3 py-2 rounded-lg hover:bg-green-50 transition-colors duration-200 text-sm">
-                  <CheckCircle2 size={16} />
-                  Mark All Completed
-                </button>
-              </div>
+              {stats.total > 0 && (
+                <div className="flex items-center gap-2">
+                  {stats.completed > 0 && (
+                    <button className="flex items-center gap-3 text-red-600 hover:text-red-700 px-3 py-2 rounded-lg hover:bg-red-50 transition-colors duration-200 text-sm">
+                      <Trash2 size={16} />
+                      Clear Completed
+                    </button>
+                  )}
+                  {stats.active > 0 && (
+                    <button className="flex items-center gap-3 text-green-600 hover:text-green-700 px-3 py-2 rounded-lg hover:bg-green-50 transition-colors duration-200 text-sm">
+                      <CheckCircle2 size={16} />
+                      Mark All Completed
+                    </button>
+                  )}
+                </div>
+              )}
             </div>
             {/* Todo Filter */}
-            <TodoFilter />
+            <TodoFilter currentFilter={ filter} stats={stats} />
           </div>
           {/* Todo Form */}
           <div className="p-6 border-b border-gray-300 bg-gray-100">

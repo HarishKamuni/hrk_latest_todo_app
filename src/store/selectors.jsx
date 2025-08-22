@@ -4,7 +4,7 @@ export const selectFilter = (state) => state.todos.filter;
 //filter items
 export const selectFilterTodos = (state) => {
   const todos = state.todos.items;
-  const fliter = state.todos.filter;
+  const filter = state.todos.filter;
   switch (filter) {
     case 'active':
       return todos.filter((todo) => !todo.completed);

@@ -3,7 +3,7 @@ import React from 'react';
 import TodoFilter from './TodoFilter';
 import TodoForm from './TodoForm';
 import TodoItem from './TodoItem';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   selectFilter,
   selectFilterTodos,
@@ -11,13 +11,22 @@ import {
   selectTodoStats,
   selectTodos,
 } from '../store/selectors';
+import { setIsAddingTodo } from '../store/todoSlice';
 
 const TodoApp = () => {
+  const dispatch = useDispatch();
   const todos = useSelector(selectTodos);
   const filteredTodos = useSelector(selectFilterTodos);
   const filter = useSelector(selectFilter);
   const stats = useSelector(selectTodoStats);
   const isAddingTodo = useSelector(selectIsAddingTodo);
+
+  console.log(todos);
+
+  const handleAddTodoClick = () => {
+    dispatch(setIsAddingTodo(true));
+    // console.log(isAddingTodo);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-100 via-gray-200 to-gray-300 py-8 px-4">
@@ -77,7 +86,10 @@ const TodoApp = () => {
           {/* Action Bar */}
           <div className="p-6 border-b border-gray-300">
             <div className="flex items-center justify-between mb-4">
-              <button className="flex items-center gap-3 bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-lg transition-colors duration-200 font-medium cursor-pointer">
+              <button
+                className="flex items-center gap-3 bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-lg transition-colors duration-200 font-medium cursor-pointer"
+                onClick={handleAddTodoClick}
+              >
                 <Plus size={20} />
                 Add Todo
               </button>
@@ -105,7 +117,7 @@ const TodoApp = () => {
           {/* Todo Form */}
           {isAddingTodo && (
             <div className="p-6 border-b border-gray-300 bg-gray-100">
-              <TodoForm />
+              <TodoForm placeholder="what need to be done" />
             </div>
           )}
           {/* Todo List */}

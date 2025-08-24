@@ -11,7 +11,12 @@ import {
   selectTodoStats,
   selectTodos,
 } from '../store/selectors';
-import { setFilter, setIsAddingTodo } from '../store/todoSlice';
+import {
+  clearCompleted,
+  markAllCompleted,
+  setFilter,
+  setIsAddingTodo,
+} from '../store/todoSlice';
 
 const TodoApp = () => {
   const dispatch = useDispatch();
@@ -21,10 +26,24 @@ const TodoApp = () => {
   const stats = useSelector(selectTodoStats);
   const isAddingTodo = useSelector(selectIsAddingTodo);
 
+  console.log(filteredTodos.length);
+  console.log(todos.length);
+
+  const handleFilterChange = (newFilter) => {
+    dispatch(setFilter(newFilter));
+  };
 
   const handleAddTodoClick = () => {
     dispatch(setIsAddingTodo(true));
     // console.log(isAddingTodo);
+  };
+
+  const handleMarkAllComplete = () => {
+    dispatch(markAllCompleted());
+  };
+
+  const handleClearCompleted = () => {
+    dispatch(clearCompleted());
   };
 
   return (
@@ -96,13 +115,19 @@ const TodoApp = () => {
               {stats.total > 0 && (
                 <div className="flex items-center gap-2">
                   {stats.completed > 0 && (
-                    <button className="flex items-center gap-3 text-red-600 hover:text-red-700 px-3 py-2 rounded-lg hover:bg-red-50 transition-colors duration-200 text-sm">
+                    <button
+                      className="flex items-center gap-3 text-red-600 hover:text-red-700 px-3 py-2 rounded-lg hover:bg-red-50 transition-colors duration-200 text-sm"
+                      onClick={handleClearCompleted}
+                    >
                       <Trash2 size={16} />
                       Clear Completed
                     </button>
                   )}
                   {stats.active > 0 && (
-                    <button className="flex items-center gap-3 text-green-600 hover:text-green-700 px-3 py-2 rounded-lg hover:bg-green-50 transition-colors duration-200 text-sm">
+                    <button
+                      className="flex items-center gap-3 text-green-600 hover:text-green-700 px-3 py-2 rounded-lg hover:bg-green-50 transition-colors duration-200 text-sm"
+                      onClick={handleMarkAllComplete}
+                    >
                       <CheckCircle2 size={16} />
                       Mark All Completed
                     </button>
@@ -114,6 +139,7 @@ const TodoApp = () => {
             <TodoFilter
               currentFilter={filter}
               stats={stats}
+              onFilterChange={handleFilterChange}
             />
           </div>
           {/* Todo Form */}
@@ -138,7 +164,7 @@ const TodoApp = () => {
                   <div className="text-gray-600">
                     <Filter size={48} className="mx-auto mb-4 opacity-50" />
                     <p className="text-lg font-medium mb-2 text-gray-800">
-                      No {Filter} Todos
+                      No {filter} Todos
                       <p className="text-sm">
                         {filter === 'completed' &&
                           'all your todos are completed'}

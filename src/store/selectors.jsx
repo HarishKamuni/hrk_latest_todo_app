@@ -10,7 +10,7 @@ export const selectFilterTodos = (state) => {
     case 'active':
       return todos.filter((todo) => !todo.completed);
     case 'completed':
-      return todos.filter((todo) => todos.completed);
+      return todos.filter((todo) => todo.completed);
     default:
       return todos;
   }

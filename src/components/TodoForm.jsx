@@ -37,7 +37,6 @@ const TodoForm = ({
   };
 
   const handleKeyDown = (e) => {
-    console.log(e.key);
     if (e.key === 'Escape') {
       handleCancel();
     }

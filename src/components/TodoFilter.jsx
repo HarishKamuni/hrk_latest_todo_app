@@ -1,7 +1,7 @@
 import React from 'react';
 import { CheckCircle, Clock, List } from 'lucide-react';
 
-const TodoFilter = ({ currentFilter, stats }) => {
+const TodoFilter = ({ currentFilter, stats, onFilterChange }) => {
   const filters = [
     {
       key: 'all',
@@ -35,6 +35,7 @@ const TodoFilter = ({ currentFilter, stats }) => {
                   ? 'bg-white text-gray-800 shadow-md'
                   : 'text-gray-700 hover:text-gray-800 hover:bg-gray-300'
               }`}
+              onClick={() => onFilterChange(key)}
             >
               <Icon size={16} />
               <span>{label}</span>

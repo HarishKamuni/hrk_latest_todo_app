@@ -24,8 +24,32 @@ const todoSlice = createSlice({
       state.items.unshift(newTodo);
       state.isAddingTodo = false;
     },
+    toggleTodo: (state, action) => {
+      const todo = state.items.find((todo) => todo.id === action.payload);
+      if (todo) {
+        todo.completed = !todo.completed;
+        todo.updatedAt = new Date().toISOString();
+      }
+    },
+    deletTodo: (state, action) => {
+      state.items = state.items.filter((todo) => todo.id !== action.payload);
+    },
+    updateTodo: (state, action) => {
+      const { id, updates } = action.payload;
+      const todo = state.items.find((todo) => todo.id === id);
+      if (todo) {
+        Object.assign(todo, updates, { updatedAt: new Date().toISOString() });
+      }
+    },
   },
 });
 
-export const { setIsAddingTodo, addTodo } = todoSlice.actions;
+export const {
+  setIsAddingTodo,
+  addTodo,
+  toggleTodo,
+  deletTodo,
+  updateTodo,
+  setFilter,
+} = todoSlice.actions;
 export default todoSlice.reducer;

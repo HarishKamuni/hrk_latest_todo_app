@@ -11,7 +11,7 @@ import {
   selectTodoStats,
   selectTodos,
 } from '../store/selectors';
-import { setIsAddingTodo } from '../store/todoSlice';
+import { setFilter, setIsAddingTodo } from '../store/todoSlice';
 
 const TodoApp = () => {
   const dispatch = useDispatch();
@@ -21,7 +21,6 @@ const TodoApp = () => {
   const stats = useSelector(selectTodoStats);
   const isAddingTodo = useSelector(selectIsAddingTodo);
 
-  console.log(todos);
 
   const handleAddTodoClick = () => {
     dispatch(setIsAddingTodo(true));
@@ -112,7 +111,10 @@ const TodoApp = () => {
               )}
             </div>
             {/* Todo Filter */}
-            <TodoFilter currentFilter={filter} stats={stats} />
+            <TodoFilter
+              currentFilter={filter}
+              stats={stats}
+            />
           </div>
           {/* Todo Form */}
           {isAddingTodo && (
@@ -150,7 +152,7 @@ const TodoApp = () => {
             ) : (
               <div className="divide-y divide-gray-300">
                 {filteredTodos.map((todo, index) => {
-                  <TodoItem key={todo.id} todo={todo} index={index} />;
+                  return <TodoItem key={todo.id} todo={todo} index={index} />;
                 })}
               </div>
             )}
